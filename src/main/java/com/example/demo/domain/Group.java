@@ -21,4 +21,10 @@ public class Group {
     private long id;
 
     private String name;
+//    知道该写成下面的样子，但是环境有问题，报错Error executing DDL，时间不够先用别的方法写了
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    List<Trainee> trainees;
+//
+//    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+//    List<Trainer> trainers;
 }

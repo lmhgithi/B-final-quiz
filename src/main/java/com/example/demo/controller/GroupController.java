@@ -23,13 +23,19 @@ public class GroupController {
         this.groupService = groupService;
     }
 
+    @PostMapping
+    public ResponseEntity<List<GroupDto>> group() {
+        return ResponseEntity.status(HttpStatus.OK).body(groupService.group());
+    }
+
 
     @GetMapping
     public ResponseEntity<List<GroupDto>> getGroups() {
-        List<Group> groups = groupService.getGroups();
-        List<GroupDto> groupDtoList = new ArrayList<>();
-        groups.forEach(domain -> groupDtoList.add(ConvertTool.convert(domain, GroupDto.class)));
-        return ResponseEntity.status(HttpStatus.OK).body(groupDtoList);
+        return ResponseEntity.status(HttpStatus.OK).body(groupService.getGroups());
+//        List<Group> groups = groupService.getGroups();
+//        List<GroupDto> groupDtoList = new ArrayList<>();
+//        groups.forEach(domain -> groupDtoList.add(ConvertTool.convert(domain, GroupDto.class)));
+//        return ResponseEntity.status(HttpStatus.OK).body(groupDtoList);
     }
 
 
