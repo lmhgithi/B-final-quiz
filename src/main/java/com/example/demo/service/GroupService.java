@@ -84,6 +84,7 @@ public class GroupService {
                     .build();
             groupRepository.save(group);
             GroupDto groupDto = GroupDto.builder()
+                    .id(group.getId())
                     .name(group.getName())
                     .traineeDtoList(tmpTraineeDtoList)
                     .trainerDtoList(tmpTrainerDtoList)
@@ -99,13 +100,14 @@ public class GroupService {
         groupRepository.deleteAll();
     }
 
-    public void updateGroupName(Long id, String name) {
+    public void updateGroupName(Long id, GroupDto groupDto) {
         Optional<Group> group = groupRepository.findById(id);
         if (group.isPresent()) {
-            group.get().setName(name);
+            groupDtoList.get(Math.toIntExact(id-1)).setName(groupDto.getName());
+            group.get().setName(groupDto.getName());
             groupRepository.save(group.get());
         } else {
-            throw new SimpleException("user id not exists");
+            throw new SimpleException("group id not exists");
         }
     }
 }

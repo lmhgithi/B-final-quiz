@@ -14,7 +14,7 @@ import java.util.List;
 @NoArgsConstructor
 @Builder
 public class GroupDto {
-    private Integer id;
+    private long id;
     private String name;
     List<TrainerDto> trainerDtoList;
     List<TraineeDto> traineeDtoList;
