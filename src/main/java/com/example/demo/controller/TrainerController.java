@@ -5,6 +5,7 @@ import com.example.demo.domain.Trainee;
 import com.example.demo.domain.Trainer;
 import com.example.demo.dto.TraineeDto;
 import com.example.demo.dto.TrainerDto;
+import com.example.demo.exception.SimpleException;
 import com.example.demo.service.TrainerService;
 import com.example.demo.utils.ConvertTool;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,7 @@ public class TrainerController {
     }
 
     @PostMapping
-    public ResponseEntity<TrainerDto> addTrainer(@RequestBody @Valid TrainerDto trainerDto) throws MethodArgumentNotValidException {
+    public ResponseEntity<TrainerDto> addTrainer(@RequestBody @Valid TrainerDto trainerDto){
         Trainer trainer = ConvertTool.convert(trainerDto, Trainer.class);
         Trainer trainerAdded = trainerService.addTrainee(trainer);
         TrainerDto trainerDtoAdded = ConvertTool.convert(trainerAdded, TrainerDto.class);
@@ -35,7 +36,7 @@ public class TrainerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TrainerDto>> getTrainees() {
+    public ResponseEntity<List<TrainerDto>> getTrainers() {
         List<Trainer> trainers  = trainerService.getTrainers();
         List<TrainerDto> trainerDtoList = new ArrayList<>();
         trainers.forEach(domain -> trainerDtoList.add(ConvertTool.convert(domain, TrainerDto.class)));
@@ -43,4 +44,9 @@ public class TrainerController {
         return ResponseEntity.status(HttpStatus.OK).body(trainerDtoList);
     }
 
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteTrainer(@PathVariable Long id) {
+        trainerService.deleteTrainer(id);
+    }
 }

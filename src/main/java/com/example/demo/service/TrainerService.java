@@ -23,11 +23,7 @@ public class TrainerService {
         return trainerRepository.findById(trainee.getId()).get();
     }
 
-    public List<Trainer> getTrainees() {
-        return trainerRepository.findAll();
-    }
-
-    public void deleteTrainee(Long id) {
+    public void deleteTrainer(Long id) {
         trainerRepository.deleteById(id);
     }
 
