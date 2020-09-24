@@ -19,7 +19,7 @@ public class Trainer {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private long id;
     private String name;
-
+    private long groupId;
 //    @ManyToOne
 //    @JoinColumn(name = "group_id")
 //    @JsonIgnore

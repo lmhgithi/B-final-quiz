@@ -8,6 +8,7 @@ import com.example.demo.service.TraineeService;
 import com.example.demo.utils.ConvertTool;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -34,7 +35,7 @@ public class TraineeController {
     }
 
     @PostMapping
-    public ResponseEntity<TraineeDto> addTrainee(@RequestBody @Valid TraineeDto traineeDto) throws SimpleException {
+    public ResponseEntity<TraineeDto> addTrainee(@RequestBody @Valid TraineeDto traineeDto) throws MethodArgumentNotValidException {
         Trainee trainee = ConvertTool.convert(traineeDto, Trainee.class);
         Trainee traineeAdded = traineeService.addTrainee(trainee);
         TraineeDto traineeDtoAdded = ConvertTool.convert(traineeAdded, TraineeDto.class);

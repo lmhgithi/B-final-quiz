@@ -22,6 +22,7 @@ public class Trainee {
     private String office;
     private String email;
     private String github;
+    private long groupId;
 
 //    @ManyToOne
 //    @JoinColumn(name = "group_id")
