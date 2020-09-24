@@ -12,5 +12,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/trainers")
+@CrossOrigin
 public class TrainerController {
 }

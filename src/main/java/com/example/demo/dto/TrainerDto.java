@@ -11,6 +11,8 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 public class TrainerDto {
+
+    private long id;
     @NotNull
     private String name;
 }
