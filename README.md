@@ -16,7 +16,7 @@
 | 中文          | 英文               |
 | ------------------ | ------------------ |
 | 讲师            | trainer               |
-| 学员        | trainee             |
+| 学员        | traineeDto             |
 | 组           | group            |
 
 ## API 列表
@@ -39,7 +39,7 @@
 
 #### ENDPOINT
 
-GET /trainees?grouped=false
+GET /traineeDtos?grouped=false
 
 #### RESPONSE
 
@@ -51,7 +51,7 @@ GET /trainees?grouped=false
 
 ##### Body
 
-查询成功会返回 trainee 的 list，如果没有未分组的学员，则返回 `[]`：
+查询成功会返回 traineeDto 的 list，如果没有未分组的学员，则返回 `[]`：
 
 | 字段:类型          | 说明               |
 | ------------------ | ------------------ |
@@ -64,7 +64,7 @@ GET /trainees?grouped=false
 #### EXAMPLE
 
 ```shell
-$ curl 'localhost:8080/trainees?grouped=false'
+$ curl 'localhost:8080/traineeDtos?grouped=false'
 [
     {
         "id": 1,
@@ -87,7 +87,7 @@ $ curl 'localhost:8080/trainees?grouped=false'
 
 #### ENDPOINT
 
-POST /trainees
+POST /traineeDtos
 
 #### REQUEST
 
@@ -110,7 +110,7 @@ POST /trainees
 
 ##### Body
 
-创建成功的 trainee 资源。
+创建成功的 traineeDto 资源。
 
 | 字段:类型      | 说明               |
 | --------------|------------------ |
@@ -123,7 +123,7 @@ POST /trainees
 #### EXAMPLE
 
 ```shell
-$ curl -v -H "Content-Type: application/json" --data @trainee.json localhost:8080/trainees
+$ curl -v -H "Content-Type: application/json" --data @traineeDto.json localhost:8080/traineeDtos
 {
     "id": 11,
     "name": "Foo",
@@ -137,7 +137,7 @@ $ curl -v -H "Content-Type: application/json" --data @trainee.json localhost:808
 
 #### ENDPOINT
 
-DELETE /trainees/{trainee_id}
+DELETE /traineeDtos/{trainee_id}
 
 #### REQUEST
 
@@ -158,7 +158,7 @@ DELETE /trainees/{trainee_id}
 #### EXAMPLE
 
 ```shell
-$ curl -X DELETE localhost:8080/trainees/11
+$ curl -X DELETE localhost:8080/traineeDtos/11
 ```
 
 ### 查询所有未分组讲师
@@ -167,7 +167,7 @@ $ curl -X DELETE localhost:8080/trainees/11
 
 #### ENDPOINT
 
-GET /trainers?grouped=false
+GET /trainerDtos?grouped=false
 
 #### RESPONSE
 
@@ -189,7 +189,7 @@ GET /trainers?grouped=false
 #### EXAMPLE
 
 ```shell
-$ curl 'localhost:8080/trainers?grouped=false'
+$ curl 'localhost:8080/trainerDtos?grouped=false'
 [
     {
         "id": 1,
@@ -206,7 +206,7 @@ $ curl 'localhost:8080/trainers?grouped=false'
 
 #### ENDPOINT
 
-POST /trainers
+POST /trainerDtos
 
 #### REQUEST
 
@@ -236,7 +236,7 @@ POST /trainers
 #### EXAMPLE
 
 ```shell
-$ curl -v -H "Content-Type: application/json" --data @trainer.json localhost:8080/trainers
+$ curl -v -H "Content-Type: application/json" --data @trainer.json localhost:8080/trainerDtos
 {
     "id": 1,
     "name": "Fizz"
@@ -247,7 +247,7 @@ $ curl -v -H "Content-Type: application/json" --data @trainer.json localhost:808
 
 #### ENDPOINT
 
-DELETE /trainers/{trainer_id}
+DELETE /trainerDtos/{trainer_id}
 
 #### REQUEST
 
@@ -268,7 +268,7 @@ DELETE /trainers/{trainer_id}
 #### EXAMPLE
 
 ```shell
-$ curl -X DELETE localhost:8080/trainers/1
+$ curl -X DELETE localhost:8080/trainerDtos/1
 ```
 
 ### 查询所有分组
@@ -293,8 +293,8 @@ GET /groups
 | --------------|------------------- |
 | id:long       | ID。               |
 | name:string   | 分组名字。           |
-| trainers:list | 分组内包含的讲师列表。 |
-| trainees:list | 分组内包含的学员列表。 |
+| trainerDtos:list | 分组内包含的讲师列表。 |
+| traineeDtos:list | 分组内包含的学员列表。 |
 
 #### EXAMPLE
 
@@ -304,7 +304,7 @@ $ curl localhost:8080/groups
     {
         "id": 1,
         "name": "1 组",
-        "trainers": [
+        "trainerDtos": [
             {
                 "id": 5,
                 "name": "张巍"
@@ -314,7 +314,7 @@ $ curl localhost:8080/groups
                 "name": "张钊"
             }
         ],
-        "trainees": [
+        "traineeDtos": [
             {
                 "id": 1,
                 "name": "Foo",
@@ -327,7 +327,7 @@ $ curl localhost:8080/groups
     {
         "id": 2,
         "name": "2 组",
-        "trainers": [
+        "trainerDtos": [
             {
                 "id": 2,
                 "name": "朱玉前"
@@ -337,7 +337,7 @@ $ curl localhost:8080/groups
                 "name": "贵溪京"
             }
         ],
-        "trainees": [
+        "traineeDtos": [
             {
                 "id": 2,
                 "name": "Bar",
@@ -374,8 +374,8 @@ POST /groups/auto-grouping
 | --------------|------------------- |
 | id:long       | ID。               |
 | name:string   | 分组名字。           |
-| trainers:list | 分组内包含的讲师列表。 |
-| trainees:list | 分组内包含的学员列表。 |
+| trainerDtos:list | 分组内包含的讲师列表。 |
+| traineeDtos:list | 分组内包含的学员列表。 |
 
 #### EXAMPLE
 
@@ -385,7 +385,7 @@ $ curl -X POST localhost:8080/groups/auto-grouping
     {
         "id": 1,
         "name": "1 组",
-        "trainers": [
+        "trainerDtos": [
             {
                 "id": 5,
                 "name": "张巍"
@@ -395,7 +395,7 @@ $ curl -X POST localhost:8080/groups/auto-grouping
                 "name": "张钊"
             }
         ],
-        "trainees": [
+        "traineeDtos": [
             {
                 "id": 1,
                 "name": "Foo",
@@ -408,7 +408,7 @@ $ curl -X POST localhost:8080/groups/auto-grouping
     {
         "id": 2,
         "name": "2 组",
-        "trainers": [
+        "trainerDtos": [
             {
                 "id": 2,
                 "name": "朱玉前"
@@ -418,7 +418,7 @@ $ curl -X POST localhost:8080/groups/auto-grouping
                 "name": "贵溪京"
             }
         ],
-        "trainees": [
+        "traineeDtos": [
             {
                 "id": 2,
                 "name": "Bar",
@@ -490,11 +490,11 @@ $ curl -X PATCH --data '{"name": "new name"}' -H "Content-Type: application/json
 一个示例如下：
 
 ```shell
-curl -v --data '{"name": "Foo"}' -H "Content-Type: application/json" localhost:8080/trainees                                                                                                                                                                              ░▒▓ 100%  ▓▒░
+curl -v --data '{"name": "Foo"}' -H "Content-Type: application/json" localhost:8080/traineeDtos                                                                                                                                                                              ░▒▓ 100%  ▓▒░
 *   Trying ::1...
 * TCP_NODELAY set
 * Connected to localhost (::1) port 8080 (#0)
-> POST /trainees HTTP/1.1
+> POST /traineeDtos HTTP/1.1
 > Host: localhost:8080
 > User-Agent: curl/7.64.1
 > Accept: */*
