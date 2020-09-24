@@ -38,5 +38,8 @@ public class GroupController {
 //        return ResponseEntity.status(HttpStatus.OK).body(groupDtoList);
     }
 
-
+    @PatchMapping("/{id}")
+    public void updateGroupName(@PathVariable Long id, @RequestBody String name) {
+        groupService.updateGroupName(id, name);
+    }
 }

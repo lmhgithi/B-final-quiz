@@ -7,6 +7,7 @@ import com.example.demo.domain.Trainer;
 import com.example.demo.dto.GroupDto;
 import com.example.demo.dto.TraineeDto;
 import com.example.demo.dto.TrainerDto;
+import com.example.demo.exception.SimpleException;
 import com.example.demo.repository.GroupRepository;
 import com.example.demo.repository.TraineeRepository;
 import com.example.demo.repository.TrainerRepository;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class GroupService {
@@ -97,4 +99,13 @@ public class GroupService {
         groupRepository.deleteAll();
     }
 
+    public void updateGroupName(Long id, String name) {
+        Optional<Group> group = groupRepository.findById(id);
+        if (group.isPresent()) {
+            group.get().setName(name);
+            groupRepository.save(group.get());
+        } else {
+            throw new SimpleException("user id not exists");
+        }
+    }
 }
