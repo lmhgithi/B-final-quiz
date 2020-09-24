@@ -25,7 +25,7 @@ public class Trainee {
     private boolean isGrouped;
 
 //    @ManyToOne
-//    @JoinColumn(name = "group_id")
+//    @JoinColumn(name = "groups_id")
 //    @JsonIgnore
 //    private Group group;
 }

@@ -35,16 +35,18 @@ public class GroupService {
     }
 
 
-    public List<GroupDto> getGroups() {
-        return groupDtoList;
-//        return groupRepository.findAll();
+    public List<Group> getGroups() {
+        return groupRepository.findAll();
     }
 
-    public List<GroupDto>group(){
-        initGroup();
+    public List<Group>group(){
+        // 有bug，分组后，学员会被删除，又要重新加学员
         List<Trainee> trainees = traineeRepository.findAll();
         Collections.shuffle(trainees);
         List<Trainer> trainers = trainerRepository.findAll();
+        Collections.shuffle(trainers);
+        initGroup();
+
         Collections.shuffle(trainers);
         int groupNum = trainers.size()/2;
         int groupSize = trainees.size()/groupNum;
@@ -56,54 +58,55 @@ public class GroupService {
         int totalTrainees = 0;
         int totalTrainers = 0;
         for (int i = 0; i < groupNum; i += 1) {
-            List<TrainerDto> tmpTrainerDtoList = new ArrayList<>();
+            List<Trainer> tmpTrainerList = new ArrayList<>();
             for (int j = 0; j < 2; j+=1) {
                 if (totalTrainers > trainers.size()) break;
-                tmpTrainerDtoList.add(ConvertTool.convert(trainers.get(totalTrainers), TrainerDto.class));
+                tmpTrainerList.add(trainers.get(totalTrainers));
                 Trainer trainerToGroup = trainers.get(totalTrainers);
                 trainerToGroup.setGrouped(true);
-                trainerRepository.save(trainerToGroup);
                 totalTrainers += 1;
             }
 
 
-            List<TraineeDto> tmpTraineeDtoList = new ArrayList<>();
+            List<Trainee> tmpTraineeList = new ArrayList<>();
             int tmpAdd = restToAdd > 0 ? groupSize + 1 : groupSize;
             for (int j = 0; j < tmpAdd; j += 1) {
                 if (totalTrainees <= trainees.size()) {
-                    tmpTraineeDtoList.add(ConvertTool.convert(trainees.get(totalTrainees), TraineeDto.class));
+                    tmpTraineeList.add(trainees.get(totalTrainees));
                     Trainee traineeToGroup = trainees.get(totalTrainees);
                     traineeToGroup.setGrouped(true);
-                    traineeRepository.save(traineeToGroup);
                     totalTrainees += 1;
                 }
             }
             restToAdd -= 1;
             Group group = Group.builder()
+                    .trainers(tmpTrainerList)
+                    .trainees(tmpTraineeList)
                     .name(i+1 + "组")
                     .build();
             groupRepository.save(group);
-            GroupDto groupDto = GroupDto.builder()
-                    .id(group.getId())
-                    .name(group.getName())
-                    .traineeDtoList(tmpTraineeDtoList)
-                    .trainerDtoList(tmpTrainerDtoList)
-                    .build();
-            groupDtoList.add(groupDto);
         }
-        return groupDtoList;
+        return groupRepository.findAll();
 
     }
 
     private void initGroup(){
-        groupDtoList = new ArrayList<>();
         groupRepository.deleteAll();
+        List<Trainee> trainees = traineeRepository.findAll();
+        trainees.forEach(trainee -> {
+            trainee.setGrouped(false);
+        });
+        traineeRepository.saveAll(trainees);
+        List<Trainer> trainers = trainerRepository.findAll();
+        trainers.forEach(trainer -> {
+            trainer.setGrouped(false);
+        });
+        trainerRepository.saveAll(trainers);
     }
 
     public void updateGroupName(Long id, GroupDto groupDto) {
         Optional<Group> group = groupRepository.findById(id);
         if (group.isPresent()) {
-            groupDtoList.get(Math.toIntExact(id-1)).setName(groupDto.getName());
             group.get().setName(groupDto.getName());
             groupRepository.save(group.get());
         } else {
