@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/trainers")
+@RequestMapping("/trainerDtos")
 @CrossOrigin
 public class TrainerController {
     private final TrainerService trainerService;
@@ -36,8 +36,13 @@ public class TrainerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TrainerDto>> getTrainers() {
-        List<Trainer> trainers  = trainerService.getTrainers();
+    public ResponseEntity<List<TrainerDto>> getTrainers(@RequestParam(required = false) boolean grouped) {
+        List<Trainer> trainers;
+        if (!grouped) {
+            trainers  = trainerService.getTrainersByGrouped(false);
+        } else {
+            trainers  = trainerService.getTrainers();
+        }
         List<TrainerDto> trainerDtoList = new ArrayList<>();
         trainers.forEach(domain -> trainerDtoList.add(ConvertTool.convert(domain, TrainerDto.class)));
 

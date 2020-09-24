@@ -18,5 +18,5 @@ public class TrainerDto {
     @NotBlank
     private String name;
 
-    private long groupId;
+    private boolean isGrouped;
 }

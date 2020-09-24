@@ -22,6 +22,10 @@ public class TraineeService {
         return traineeRepository.findAll();
     }
 
+    public List<Trainee> getTraineesByGrouped(boolean grouped) {
+        return traineeRepository.findByIsGrouped(grouped);
+    }
+
     public Trainee addTrainee(Trainee trainee) {
         traineeRepository.save(trainee);
         return traineeRepository.findById(trainee.getId()).get();

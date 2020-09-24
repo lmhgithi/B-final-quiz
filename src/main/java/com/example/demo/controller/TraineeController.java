@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/trainees")
+@RequestMapping("/traineeDtos")
 @CrossOrigin
 public class TraineeController {
     private final TraineeService traineeService;
@@ -26,8 +26,13 @@ public class TraineeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<TraineeDto>> getTrainees() {
-        List<Trainee> trainees  = traineeService.getTrainees();
+    public ResponseEntity<List<TraineeDto>> getTrainees(@RequestParam(required = false) boolean grouped) {
+        List<Trainee> trainees;
+        if (!grouped) {
+            trainees  = traineeService.getTraineesByGrouped(false);
+        } else {
+            trainees  = traineeService.getTrainees();
+        }
         List<TraineeDto> traineeDtoList = new ArrayList<>();
         trainees.forEach(domain -> traineeDtoList.add(ConvertTool.convert(domain, TraineeDto.class)));
 

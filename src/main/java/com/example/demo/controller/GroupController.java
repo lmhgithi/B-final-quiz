@@ -23,7 +23,7 @@ public class GroupController {
         this.groupService = groupService;
     }
 
-    @PostMapping
+    @PostMapping("/auto-grouping")
     public ResponseEntity<List<GroupDto>> group() {
         return ResponseEntity.status(HttpStatus.OK).body(groupService.group());
     }
@@ -38,7 +38,7 @@ public class GroupController {
 //        return ResponseEntity.status(HttpStatus.OK).body(groupDtoList);
     }
 
-    @PutMapping("/{id}")
+    @PatchMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void updateGroupName(@PathVariable Long id, @RequestBody GroupDto groupDto) {
         groupService.updateGroupName(id, groupDto);

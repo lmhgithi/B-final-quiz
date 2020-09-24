@@ -30,4 +30,8 @@ public class TrainerService {
     public List<Trainer> getTrainers() {
         return trainerRepository.findAll();
     }
+
+    public List<Trainer> getTrainersByGrouped(boolean grouped) {
+        return trainerRepository.findByIsGrouped(grouped);
+    }
 }

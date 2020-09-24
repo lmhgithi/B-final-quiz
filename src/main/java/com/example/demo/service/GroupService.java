@@ -61,7 +61,7 @@ public class GroupService {
                 if (totalTrainers > trainers.size()) break;
                 tmpTrainerDtoList.add(ConvertTool.convert(trainers.get(totalTrainers), TrainerDto.class));
                 Trainer trainerToGroup = trainers.get(totalTrainers);
-                trainerToGroup.setGroupId(i+1);
+                trainerToGroup.setGrouped(true);
                 trainerRepository.save(trainerToGroup);
                 totalTrainers += 1;
             }
@@ -73,7 +73,7 @@ public class GroupService {
                 if (totalTrainees <= trainees.size()) {
                     tmpTraineeDtoList.add(ConvertTool.convert(trainees.get(totalTrainees), TraineeDto.class));
                     Trainee traineeToGroup = trainees.get(totalTrainees);
-                    traineeToGroup.setGroupId(i+1);
+                    traineeToGroup.setGrouped(true);
                     traineeRepository.save(traineeToGroup);
                     totalTrainees += 1;
                 }

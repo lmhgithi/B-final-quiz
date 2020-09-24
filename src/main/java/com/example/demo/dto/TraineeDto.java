@@ -31,5 +31,5 @@ public class TraineeDto {
     @NotBlank
     private String github;
 
-    private long groupId;
+    private boolean isGrouped;
 }
